@@ -1,0 +1,100 @@
+.featuresSection {
+    background: #f3fbfd;
+    padding: 48px 16px;
+}
+
+.featuresContainer {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+.featuresText {
+    flex: 1;
+}
+
+.featureTitle {
+    margin: 0 0 14px;
+    font-size: 34px;
+    line-height: 1.05;
+    font-weight: 800;
+    color: #1aa7c0;
+}
+
+.featuresDesc{
+    margin: 0 0 22px;
+    max-width: 420px;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: #5b677a;
+
+}
+
+.featuresBtn {
+    background: #2aa8c7;
+    border: 0;
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(42, 168, 199, 0.18);
+}
+
+.featuresBtn:hover {
+    background: #1f9bb8;
+}
+
+.featuresMedia {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.featuresImage {
+    width: 460px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 26px;
+    object-fit: cover;
+    animation: featuresFloat 3s ease-in-out infinite;
+}
+
+@keyframes featuresFloat {
+    0% { teansform: translateY(0px);}
+    50%{ transform: translateY(-6px);}
+    100%{ transform: translate(0px); }
+}
+
+
+
+.featuresBadgeIcon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+@media (max-width: 900px) {
+  .featuresContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .featuresMedia {
+    width: 100%;
+  }
+
+  .featuresImage {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .featuresBadge {
+    left: 10px;
+    bottom: 24px;
+  }
+}

@@ -4,9 +4,7 @@
  import CTA from "./components/CTA";
  import Menu from "./components/Menu";
 import FAQ from "./components/FAQ";
-
-
-// import Features from "./components/Features";
+import Features from "./components/Features";
 // import MobileApp from "./components/MobileApp";
 
 // import Footer from "./components/Footer";
@@ -20,6 +18,8 @@ function App() {
         <CTA />
           <Menu />
            <FAQ />
+             <Features />
+
 
 
       {/* <Features />
