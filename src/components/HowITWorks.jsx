@@ -1,8 +1,11 @@
 import React from "react";
 import "./HowITWorks.css";
 import Image from "../assets/image.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function HowITWorks() {
+  const navigate = useNavigate();
+
   return (
     <div className="hss-page">
 
@@ -22,7 +25,11 @@ export default function HowITWorks() {
               typesetting industry.
             </p>
 
-            <button className="hss-btn">
+            {/* ✅ FIXED BUTTON */}
+            <button
+              className="hss-btn"
+              onClick={() => navigate("/")}
+            >
               Learn about us
             </button>
           </div>
@@ -50,6 +57,7 @@ export default function HowITWorks() {
             </div>
 
           </div>
+
         </div>
       </section>
 

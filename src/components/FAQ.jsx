@@ -3,6 +3,7 @@ import "./FAQ.css";
 
 export default function FAQ() {
   return (
+    
     <section className="faqSection">
       <div className="faqContainer">
         <div className="faqLeft">

@@ -2,6 +2,7 @@ import React from "react";
 import "./HeroLanding.css";
 import heroImg from "../assets/hero.png";
 
+/* ICON PIN */
 function IconPin() {
   return (
     <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
@@ -15,6 +16,7 @@ function IconPin() {
   );
 }
 
+/* ICON CART */
 function IconCart() {
   return (
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
@@ -36,33 +38,43 @@ function IconCart() {
   );
 }
 
+/* MAIN COMPONENT */
 export default function HeroLanding() {
   return (
     <div className="page">
+
       {/* TOP BAR */}
       <div className="topBar">
         <div className="topBarInner">
+
           <span className="topBarText">
             We’re open and available for takeaway & delivery.
           </span>
 
-          <button className="topBarBtn">Order Now</button>
+          <button className="topBarBtn">
+            Order Now
+          </button>
+
         </div>
       </div>
 
       {/* HEADER */}
       <header className="header">
         <div className="headerInner">
+
+          {/* LOGO */}
           <div className="logo">
             <IconPin />
           </div>
 
+          {/* NAVIGATION */}
           <nav className="nav">
-            <a href="#home" className="navLink">
+
+            <a href="#hero" className="navLink">
               Home
             </a>
 
-            <a href="#order" className="navLink">
+            <a href="#Menu" className="navLink">
               Order
             </a>
 
@@ -77,61 +89,122 @@ export default function HeroLanding() {
             <a href="#contact" className="navLink">
               Contact
             </a>
+
           </nav>
 
+          {/* CART */}
           <div className="cartBadge">
+
             <IconCart />
+
+            <span className="cartCount">
+              3
+            </span>
+
           </div>
+
         </div>
       </header>
 
       {/* HERO */}
-      <main className="hero">
+      <main id="hero" className="hero">
         <div className="heroInner">
-          {/* LEFT */}
+
+          {/* LEFT SIDE */}
           <section className="heroLeft">
+
             <h1 className="heroTitle">
               Beautiful food &
               <br />
-              takeaway, <span className="heroAccent">delivered</span>
+              takeaway,{" "}
+              <span className="heroAccent">
+                delivered
+              </span>
               <br />
               to your door.
             </h1>
 
             <p className="heroSubtitle">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
+              Lorem Ipsum is simply dummy text of the printing and
+              typesetting industry. Lorem Ipsum has been the industry's
+              standard dummy text ever since the 1500s.
             </p>
 
-            <button className="primaryBtn">Place an Order</button>
+            <button className="primaryBtn">
+              Place an Order
+            </button>
 
+            {/* TRUSTPILOT */}
             <div className="trustRow">
-              <span className="trustStar">★</span>
+
+              <span className="trustStar">
+                ★
+              </span>
 
               <div>
-                <div className="trustTop">Trustpilot</div>
+
+                <div className="trustTop">
+                  Trustpilot
+                </div>
 
                 <div className="trustBottom">
                   4.8 out of 5 based on 2000+ reviews
                 </div>
+
               </div>
+
             </div>
+
           </section>
 
-          {/* RIGHT */}
+          {/* RIGHT SIDE */}
           <section className="heroRight">
+
             <div className="imageFrame">
+
               <img
                 src={heroImg}
                 alt="Food delivery"
                 className="heroImage"
-              ></img>
+              />
+
+              {/* APPS */}
+              <div className="apps">
+
+                <div className="appBox google">
+                  G
+                </div>
+
+                <div className="appBox phone">
+                  📱
+                </div>
+
+                <div className="appBox apple">
+                  
+                </div>
+
+              </div>
+
+              {/* DOTS */}
+              <div className="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              {/* BLOB */}
+              <div className="blob"></div>
 
             </div>
+
           </section>
+
         </div>
       </main>
+
     </div>
   );
 }

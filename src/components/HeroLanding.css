@@ -284,39 +284,147 @@ body {
   transform: scale(1.2);
 }
 
+/* =========================
+   TABLET (<= 992px)
+========================= */
 @media (max-width: 992px) {
+
+  .headerInner {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+  }
+
   .heroInner {
+    flex-direction: column;
+    text-align: center;
+    gap: 50px;
+  }
+
+  .heroLeft {
+    align-items: center;
+    display: flex;
     flex-direction: column;
   }
 
   .heroTitle {
-    font-size: 52px;
+    font-size: 54px;
+  }
+
+  .heroSubtitle {
+    max-width: 600px;
+  }
+
+  .trustRow {
+    justify-content: center;
   }
 
   .imageFrame {
     width: 100%;
-    height: 500px;
+    max-width: 520px;
+    height: 520px;
+  }
+}
+/* =========================
+   MOBILE (<= 600px)
+========================= */
+@media (max-width: 600px) {
+
+  /* TOP BAR */
+  .topBarInner {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .topBarText {
+    font-size: 12px;
+  }
+
+  /* HEADER */
+  .headerInner {
+    padding: 16px;
+    gap: 14px;
   }
 
   .nav {
-    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
   }
-}
 
-@media (max-width: 600px) {
+  .navLink {
+    font-size: 13px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 40px 16px;
+  }
+
+  .heroInner {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
   .heroTitle {
-    font-size: 42px;
+    font-size: 36px;
+    line-height: 1.2;
   }
 
   .heroSubtitle {
-    font-size: 15px;
+    font-size: 14px;
+    line-height: 1.6;
   }
 
-  .topBarInner {
+  .primaryBtn {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .trustRow {
     flex-direction: column;
+    gap: 6px;
   }
 
+  /* IMAGE */
   .imageFrame {
-    height: 420px;
+    width: 100%;
+    height: 360px;
+  }
+
+  /* DECORATIONS */
+  .apps {
+    gap: 10px;
+  }
+
+  .appBox {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .blob {
+    width: 120px;
+    height: 120px;
+  }
+
+  .dots {
+    display: none; /* cleaner mobile look */
+  }
+
+  /* CART */
+  .cartBadge {
+    width: 48px;
+    height: 48px;
   }
 }
