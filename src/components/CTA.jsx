@@ -6,7 +6,7 @@ import step3 from "../assets/step3.jpg";
 
 export default function CTA() {
   return (
-    <section className="ss-section ss-cta">
+    <section id="cta" className="ss-section ss-cta">
       <div className="ss-inner ss-ctaInner">
         <h2 className="ss-ctaTitle">How it works.</h2>
 

@@ -4,7 +4,7 @@ import "./FAQ.css";
 export default function FAQ() {
   return (
     
-    <section className="faqSection">
+    <section id="faq" className="faqSection">
       <div className="faqContainer">
         <div className="faqLeft">
           <img className="faqImage" src={faqImg} alt="FAQ illustration" />

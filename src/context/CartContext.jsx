@@ -1,31 +1,55 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
-const CartContext = createContext();
+const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
+  // cart items: [{ id, title, price, img, qty }]
   const [cart, setCart] = useState([]);
 
-  const addToCart = (item, qty) => {
-    setCart((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
+  const addToCart = (item, qty = 1) => {
+    const quantity = Number(qty) || 1;
 
-      if (existing) {
-        return prev.map((i) =>
-          i.id === item.id ? { ...i, qty: i.qty + qty } : i
-        );
+    setCart((prev) => {
+      const existingIndex = prev.findIndex((p) => p.id === item.id);
+
+      if (existingIndex !== -1) {
+        const next = [...prev];
+        next[existingIndex] = {
+          ...next[existingIndex],
+          qty: next[existingIndex].qty + quantity,
+        };
+        return next;
       }
 
-      return [...prev, { ...item, qty }];
+      return [
+        ...prev,
+        {
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          img: item.img,
+          qty: quantity,
+        },
+      ];
     });
   };
 
-  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter((p) => p.id !== id));
+  };
 
-  return (
-    <CartContext.Provider value={{ cart, addToCart, cartCount }}>
-      {children}
-    </CartContext.Provider>
+  const clearCart = () => setCart([]);
+
+  const value = useMemo(
+    () => ({ cart, addToCart, removeFromCart, clearCart }),
+    [cart]
   );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-export const useCart = () => useContext(CartContext);
+export function useCart() {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error("useCart must be used inside CartProvider");
+  return ctx;
+}

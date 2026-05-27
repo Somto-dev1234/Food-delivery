@@ -4,7 +4,7 @@ import featureImg from "../assets/features.png";
 
 export default function Features() {
   return (
-    <section className="featuresSection">
+    <section id="contact" className="featuresSection">
       <div className="featuresContainer">
         <div className="featuresText">
           <h2 className="featuresTitle">

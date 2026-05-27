@@ -9,6 +9,7 @@ import FAQ from "./components/FAQ";
 import Features from "./components/Features";
 import Support from "./components/Support";
 import Footer from "./components/Footer";
+import Checkout from "./components/Checkout";
 
 
 function HomePage() {
@@ -30,9 +31,10 @@ export default function App() {
     <Routes>
       {/* Home page */}
       <Route path="/" element={<HomePage />} />
+      <Route path="/checkout" element={<Checkout />} />
 
       {/* Company page */}
-      <Route path="/company" element={<HowITWorks />} />
+      {/* <Route path="/" element={<HowITWorks />} /> */}
     </Routes>
   );
 }

@@ -51,6 +51,7 @@ body {
   background: white;
 }
 
+
 .headerInner {
   max-width: 1200px;
   margin: auto;
@@ -59,8 +60,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  position: relative;
+  z-index: 1000;
 }
-
 .nav {
   display: flex;
   align-items: center;
@@ -283,17 +285,27 @@ body {
 .cartBadge:active .cartCount {
   transform: scale(1.2);
 }
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  z-index: 900;
+  animation: fadeIn 0.2s ease;
+}
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 /* =========================
    TABLET (<= 992px)
 ========================= */
 @media (max-width: 992px) {
 
   .headerInner {
-    flex-direction: column;
-    height: auto;
-    padding: 20px;
-    gap: 18px;
+    position: relative;
+    z-index: 1100;
   }
 
   .nav {
@@ -355,14 +367,12 @@ body {
   }
 
   .nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
+    left: 12px;
+    right: 12px;
   }
 
   .navLink {
-    font-size: 13px;
+    font-size: 16px;
   }
 
   /* HERO */
@@ -426,5 +436,123 @@ body {
   .cartBadge {
     width: 48px;
     height: 48px;
+  }
+}
+.navLink {
+  cursor: pointer;
+  color: #444;
+  transition: 0.3s;
+}
+
+.navLink.active {
+  color: #35c8c8;
+  font-weight: 700;
+}
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1100;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background: #35c8c8;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+/* ANIMATION */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* MOBILE NAV */
+@media (max-width: 768px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+  /* FIX: NAV IS FULLY OFFSCREEN BY DEFAULT */
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 80%;
+
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(25px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 40px;
+    gap: 30px;
+
+    z-index: 1001;
+
+    /* IMPORTANT FIX */
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+
+    transition: 0.35s ease;
+  }
+
+  /* OPEN STATE */
+  .nav.open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* LINKS */
+  .navLink {
+    font-size: 22px;
+    font-weight: 500;
+    color: #222;
+    cursor: pointer;
+
+    transform: translateX(20px);
+    opacity: 0;
+  }
+
+  .nav.open .navLink {
+    animation: linkSlide 0.4s ease forwards;
+  }
+
+  .nav.open .navLink:nth-child(1) { animation-delay: 0.05s; }
+  .nav.open .navLink:nth-child(2) { animation-delay: 0.10s; }
+  .nav.open .navLink:nth-child(3) { animation-delay: 0.15s; }
+  .nav.open .navLink:nth-child(4) { animation-delay: 0.20s; }
+
+  @keyframes linkSlide {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .navLink:hover {
+    color: #35c8c8;
+    transform: translateX(6px);
+    transition: 0.2s;
   }
 }

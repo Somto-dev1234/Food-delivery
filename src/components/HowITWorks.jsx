@@ -9,7 +9,7 @@ export default function HowITWorks() {
   return (
     <div className="hss-page">
 
-      <section className="hss-section hss-hero">
+      <section id="howitworks" className="hss-section hss-hero">
         <div className="hss-inner">
 
           <div className="hss-text">

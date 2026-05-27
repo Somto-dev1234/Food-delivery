@@ -3,7 +3,7 @@ import "./Footer.css";
 
 export default function footer() {
   return (
-    <footer className="ft">
+    <footer id="footer" className="ft">
       <div className="ft-inner">
         <div className="ft-top">
           <div className="ft-left">
@@ -33,10 +33,10 @@ export default function footer() {
           <div className="ft-cols" aria-label="Footer links">
             <div className="ft-col">
               <h4 className="ft-colTitle">COMPANY</h4>
-              <a className="ft-link" href="#">Home</a>
-              <a className="ft-link" href="#">Order</a>
-              <a className="ft-link" href="#">FAQ</a>
-              <a className="ft-link" href="#">Contact</a>
+              <a className="ft-link" href="#hero">Home</a>
+              <a className="ft-link" href="#menu">Order</a>
+              <a className="ft-link" href="#faq">FAQ</a>
+              <a className="ft-link" href="#contact">Contact</a>
             </div>
 
             <div className="ft-col">

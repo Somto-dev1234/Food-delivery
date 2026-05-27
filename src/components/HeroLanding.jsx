@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./HeroLanding.css";
 import heroImg from "../assets/hero.png";
+import { useCart } from "../context/CartContext";
+import CartSidebar from "./CartSidebar";
 
 /* ICON PIN */
 function IconPin() {
@@ -20,191 +22,216 @@ function IconPin() {
 function IconCart() {
   return (
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M6 6h15l-2 9H8L6 6Z"
-        stroke="#35c8c8"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6 6 5 3H2"
-        stroke="#35c8c8"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <path d="M6 6h15l-2 9H8L6 6Z" stroke="#35c8c8" strokeWidth="2" />
       <circle cx="9" cy="20" r="1.6" fill="#35c8c8" />
       <circle cx="18" cy="20" r="1.6" fill="#35c8c8" />
     </svg>
   );
 }
 
-/* MAIN COMPONENT */
 export default function HeroLanding() {
+  const { cart } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const sections = ["hero", "menu", "faq", "contact"];
+
+    const handleScroll = () => {
+      let current = "hero";
+
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 150) current = id;
+        }
+      }
+
+      setActiveSection(current);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // close menu if user clicks outside (mobile)
+  useEffect(() => {
+    const onDown = (e) => {
+      const target = e.target;
+      const navEl = document.querySelector(".nav");
+      const hamburgerEl = document.querySelector(".hamburger");
+      if (!navEl || !hamburgerEl) return;
+
+      const clickedInsideNav = navEl.contains(target);
+      const clickedHamburger = hamburgerEl.contains(target);
+
+      if (!clickedInsideNav && !clickedHamburger) setMenuOpen(false);
+    };
+
+    window.addEventListener("mousedown", onDown);
+    return () => window.removeEventListener("mousedown", onDown);
+  }, []);
+
   return (
     <div className="page">
-
       {/* TOP BAR */}
       <div className="topBar">
         <div className="topBarInner">
-
           <span className="topBarText">
             We’re open and available for takeaway & delivery.
           </span>
 
-          <button className="topBarBtn">
+          <button className="topBarBtn" onClick={() => scrollTo("menu")}>
             Order Now
           </button>
-
         </div>
       </div>
 
       {/* HEADER */}
+      
       <header className="header">
+        {menuOpen && (
+  <div
+    className="overlay"
+    onClick={() => setMenuOpen(false)}
+  />
+)}
         <div className="headerInner">
-
-          {/* LOGO */}
+          {/* LEFT */}
           <div className="logo">
             <IconPin />
           </div>
 
-          {/* NAVIGATION */}
-          <nav className="nav">
-
-            <a href="#hero" className="navLink">
+          {/* NAV */}
+          {/* NOTE: this nav gets .open on mobile */}
+          <nav className={`nav ${menuOpen ? "open" : ""}`}>
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollTo("hero")}
+              onKeyDown={(e) => e.key === "Enter" && scrollTo("hero")}
+              className={
+                activeSection === "hero" ? "active navLink" : "navLink"
+              }
+            >
               Home
-            </a>
-
-            <a href="#Menu" className="navLink">
-              Order
-            </a>
-
-            <a href="#company" className="navLink">
-              Company
-            </a>
-
-            <a href="#faq" className="navLink">
-              FAQ
-            </a>
-
-            <a href="#contact" className="navLink">
-              Contact
-            </a>
-
-          </nav>
-
-          {/* CART */}
-          <div className="cartBadge">
-
-            <IconCart />
-
-            <span className="cartCount">
-              3
             </span>
 
-          </div>
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollTo("menu")}
+              onKeyDown={(e) => e.key === "Enter" && scrollTo("menu")}
+              className={
+                activeSection === "menu" ? "active navLink" : "navLink"
+              }
+            >
+              Order
+            </span>
 
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollTo("faq")}
+              onKeyDown={(e) => e.key === "Enter" && scrollTo("faq")}
+              className={
+                activeSection === "faq" ? "active navLink" : "navLink"
+              }
+            >
+              FAQ
+            </span>
+
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={() => scrollTo("contact")}
+              onKeyDown={(e) => e.key === "Enter" && scrollTo("contact")}
+              className={
+                activeSection === "contact" ? "active navLink" : "navLink"
+              }
+            >
+              Contact
+            </span>
+          </nav>
+
+          {/* RIGHT SIDE (CART + HAMBURGER) */}
+          <div className="rightActions">
+            <div
+              className="cartBadge"
+              onClick={() => setCartOpen(true)}
+              role="button"
+              tabIndex={0}
+            >
+              <IconCart />
+              <span className="cartCount">{totalQty}</span>
+            </div>
+
+            {/* NOTE: button toggles .open on hamburger (for X animation) */}
+            <button
+              className={`hamburger ${menuOpen ? "open" : ""}`}
+              type="button"
+              aria-label="Toggle navigation menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
         </div>
       </header>
 
       {/* HERO */}
       <main id="hero" className="hero">
         <div className="heroInner">
-
-          {/* LEFT SIDE */}
           <section className="heroLeft">
-
             <h1 className="heroTitle">
-              Beautiful food &
-              <br />
+              Beautiful food &<br />
               takeaway,{" "}
-              <span className="heroAccent">
-                delivered
-              </span>
-              <br />
-              to your door.
+              <span className="heroAccent">delivered</span>
+              <br /> to your door.
             </h1>
 
             <p className="heroSubtitle">
-              Lorem Ipsum is simply dummy text of the printing and
-              typesetting industry. Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s.
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
             </p>
 
-            <button className="primaryBtn">
+            <button
+              className="primaryBtn"
+              onClick={() => scrollTo("menu")}
+            >
               Place an Order
             </button>
-
-            {/* TRUSTPILOT */}
-            <div className="trustRow">
-
-              <span className="trustStar">
-                ★
-              </span>
-
-              <div>
-
-                <div className="trustTop">
-                  Trustpilot
-                </div>
-
-                <div className="trustBottom">
-                  4.8 out of 5 based on 2000+ reviews
-                </div>
-
-              </div>
-
-            </div>
-
           </section>
 
-          {/* RIGHT SIDE */}
           <section className="heroRight">
-
             <div className="imageFrame">
-
               <img
                 src={heroImg}
                 alt="Food delivery"
                 className="heroImage"
               />
-
-              {/* APPS */}
-              <div className="apps">
-
-                <div className="appBox google">
-                  G
-                </div>
-
-                <div className="appBox phone">
-                  📱
-                </div>
-
-                <div className="appBox apple">
-                  
-                </div>
-
-              </div>
-
-              {/* DOTS */}
-              <div className="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-
-              {/* BLOB */}
-              <div className="blob"></div>
-
             </div>
-
           </section>
-
         </div>
       </main>
 
+      {/* CART */}
+      <CartSidebar open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
 }
