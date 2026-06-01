@@ -32,8 +32,8 @@ function IconCart() {
 export default function HeroLanding() {
   const { cart } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
 
   const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
 
@@ -50,15 +50,12 @@ export default function HeroLanding() {
 
     const handleScroll = () => {
       let current = "hero";
-
       for (const id of sections) {
         const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 150) current = id;
+        if (el && el.getBoundingClientRect().top <= 150) {
+          current = id;
         }
       }
-
       setActiveSection(current);
     };
 
@@ -66,18 +63,16 @@ export default function HeroLanding() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // close menu if user clicks outside (mobile)
   useEffect(() => {
     const onDown = (e) => {
-      const target = e.target;
-      const navEl = document.querySelector(".nav");
-      const hamburgerEl = document.querySelector(".hamburger");
-      if (!navEl || !hamburgerEl) return;
+      const nav = document.querySelector(".nav");
+      const burger = document.querySelector(".hamburger");
 
-      const clickedInsideNav = navEl.contains(target);
-      const clickedHamburger = hamburgerEl.contains(target);
+      if (!nav || !burger) return;
 
-      if (!clickedInsideNav && !clickedHamburger) setMenuOpen(false);
+      if (!nav.contains(e.target) && !burger.contains(e.target)) {
+        setMenuOpen(false);
+      }
     };
 
     window.addEventListener("mousedown", onDown);
@@ -86,6 +81,7 @@ export default function HeroLanding() {
 
   return (
     <div className="page">
+
       {/* TOP BAR */}
       <div className="topBar">
         <div className="topBarInner">
@@ -93,103 +89,46 @@ export default function HeroLanding() {
             We’re open and available for takeaway & delivery.
           </span>
 
-          <button className="topBarBtn" onClick={() => scrollTo("menu")}>
-            Order Now
-          </button>
-        </div>
-      </div>
+          <div className="topBarActions">
+            <button className="topBarBtn" onClick={() => scrollTo("menu")}>
+              Order Now
+            </button>
 
-      {/* HEADER */}
-      
-      <header className="header">
-        {menuOpen && (
-  <div
-    className="overlay"
-    onClick={() => setMenuOpen(false)}
-  />
-)}
-        <div className="headerInner">
-          {/* LEFT */}
-          <div className="logo">
-            <IconPin />
-          </div>
-
-          {/* NAV */}
-          {/* NOTE: this nav gets .open on mobile */}
-          <nav className={`nav ${menuOpen ? "open" : ""}`}>
-            <span
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollTo("hero")}
-              onKeyDown={(e) => e.key === "Enter" && scrollTo("hero")}
-              className={
-                activeSection === "hero" ? "active navLink" : "navLink"
-              }
-            >
-              Home
-            </span>
-
-            <span
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollTo("menu")}
-              onKeyDown={(e) => e.key === "Enter" && scrollTo("menu")}
-              className={
-                activeSection === "menu" ? "active navLink" : "navLink"
-              }
-            >
-              Order
-            </span>
-
-            <span
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollTo("faq")}
-              onKeyDown={(e) => e.key === "Enter" && scrollTo("faq")}
-              className={
-                activeSection === "faq" ? "active navLink" : "navLink"
-              }
-            >
-              FAQ
-            </span>
-
-            <span
-              role="button"
-              tabIndex={0}
-              onClick={() => scrollTo("contact")}
-              onKeyDown={(e) => e.key === "Enter" && scrollTo("contact")}
-              className={
-                activeSection === "contact" ? "active navLink" : "navLink"
-              }
-            >
-              Contact
-            </span>
-          </nav>
-
-          {/* RIGHT SIDE (CART + HAMBURGER) */}
-          <div className="rightActions">
-            <div
-              className="cartBadge"
-              onClick={() => setCartOpen(true)}
-              role="button"
-              tabIndex={0}
-            >
-              <IconCart />
-              <span className="cartCount">{totalQty}</span>
-            </div>
-
-            {/* NOTE: button toggles .open on hamburger (for X animation) */}
+            {/* HAMBURGER (ONLY ONE BUTTON) */}
             <button
               className={`hamburger ${menuOpen ? "open" : ""}`}
-              type="button"
-              aria-label="Toggle navigation menu"
-              aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
+              aria-label="menu"
             >
               <span />
               <span />
               <span />
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* HEADER */}
+      <header className="header">
+        {menuOpen && <div className="overlay" onClick={() => setMenuOpen(false)} />}
+
+        <div className="headerInner">
+          <div className="logo">
+            <IconPin />
+          </div>
+
+          <nav className={`nav ${menuOpen ? "open" : ""}`}>
+            <span onClick={() => scrollTo("hero")} className={activeSection === "hero" ? "active navLink" : "navLink"}>Home</span>
+            <span onClick={() => scrollTo("menu")} className={activeSection === "menu" ? "active navLink" : "navLink"}>Order</span>
+            <span onClick={() => scrollTo("faq")} className={activeSection === "faq" ? "active navLink" : "navLink"}>FAQ</span>
+            <span onClick={() => scrollTo("contact")} className={activeSection === "contact" ? "active navLink" : "navLink"}>Contact</span>
+          </nav>
+
+          <div className="rightActions">
+            <div className="cartBadge" onClick={() => setCartOpen(true)}>
+              <IconCart />
+              <span className="cartCount">{totalQty}</span>
+            </div>
           </div>
         </div>
       </header>
@@ -200,37 +139,27 @@ export default function HeroLanding() {
           <section className="heroLeft">
             <h1 className="heroTitle">
               Beautiful food &<br />
-              takeaway,{" "}
-              <span className="heroAccent">delivered</span>
-              <br /> to your door.
+              takeaway, <span className="heroAccent">delivered</span><br />
+              to your door.
             </h1>
 
             <p className="heroSubtitle">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
+              Lorem Ipsum is simply dummy text.
             </p>
 
-            <button
-              className="primaryBtn"
-              onClick={() => scrollTo("menu")}
-            >
+            <button className="primaryBtn" onClick={() => scrollTo("menu")}>
               Place an Order
             </button>
           </section>
 
           <section className="heroRight">
             <div className="imageFrame">
-              <img
-                src={heroImg}
-                alt="Food delivery"
-                className="heroImage"
-              />
+              <img src={heroImg} alt="food" className="heroImage" />
             </div>
           </section>
         </div>
       </main>
 
-      {/* CART */}
       <CartSidebar open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );

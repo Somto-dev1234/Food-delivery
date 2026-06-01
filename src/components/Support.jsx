@@ -6,6 +6,16 @@ import "./Support.css";
 import supportImg from "../assets/support.jpg";
 
 export default function Support() {
+  const scrollToMenu = () => {
+    const menuSection = document.getElementById("menu");
+
+    if (menuSection) {
+      menuSection.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section className="support-section">
       <div className="support-container">
@@ -23,7 +33,9 @@ export default function Support() {
             and local business.
           </h2>
 
-          <button>Order Now</button>
+          <button onClick={scrollToMenu}>
+            Order Now
+          </button>
 
           <div className="shape shape1"></div>
           <div className="shape shape2"></div>

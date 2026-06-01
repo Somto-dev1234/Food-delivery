@@ -13,6 +13,7 @@
 .menuTitle {
   margin: 0;
   text-align: center;
+
   color: #18a9c1;
   font-size: 36px;
   font-weight: 700;
@@ -145,7 +146,31 @@
   cursor: pointer;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
 }
+.qtyControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f2fdfd;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
 
+.qtyBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #35c8c8;
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.qtyValue {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 600;
+}
 .menuFooter {
   margin-top: 26px;
   display: flex;
@@ -162,7 +187,32 @@
   font-weight: 800;
   cursor: pointer;
 }
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #35c8c8;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: slideUp 0.3s ease;
+}
 
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
 /* responsive */
 @media (max-width: 720px) {
   .menuGrid {
