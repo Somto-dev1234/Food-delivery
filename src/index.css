@@ -11,11 +11,29 @@ html {
 body {
   margin: 0;
 }
+/* =========================
+   Anti-stretch overrides (place at end)
+========================= */
 
-img {
-  max-width: 100%;
+/* Force images to keep aspect ratio */
+img,
+.card img,
+.menuCard img,
+.itemCard img {
+  width: 100%;
+  height: auto !important;
+  object-fit: cover; /* change to "contain" if you don't want cropping */
+}
+
+/* If you have image wrappers forcing a height */
+.card .image,
+.menuCard .image,
+.itemCard .image,
+.cardImg,
+.menuImg,
+.itemImg {
+  width: 100%;
   height: auto;
-  display: block;
 }
 
 /* Optional but helpful to avoid overflow from long text */
