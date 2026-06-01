@@ -1,7 +1,113 @@
+/* =========================
+   Global baseline
+========================= */
 html {
   scroll-behavior: smooth;
+  font-family: inter, sans-serif;
 }
 
-.clip-path {
-  clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Optional but helpful to avoid overflow from long text */
+p, a, li, span {
+  overflow-wrap: break-word;
+}
+
+/* Your container */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/* =========================
+   Responsive layout helpers
+   (works great for many React comps)
+========================= */
+
+/* Header/nav wrappers (common names) */
+.header,
+.nav,
+.headerInner,
+.navBar,
+.navLinks,
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;          /* key for responsiveness */
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* If you have a row of buttons/links */
+.row,
+.linkRow,
+.linksRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* =========================
+   Card / menu grids
+========================= */
+
+/* Common wrapper class names you might have */
+.menu,
+.cards,
+.menuGrid,
+.grid,
+.sectionGrid,
+.section-grid {
+  display: grid;
+  gap: 16px;
+
+  /* Auto responsive columns */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* Cards themselves should never force overflow */
+.card,
+.menuCard,
+.itemCard {
+  width: 100%;
+  min-width: 0; /* important inside flex/grid */
+}
+
+/* If your cards have images inside */
+.card img,
+.menuCard img,
+.itemCard img {
+  width: 100%;
+  height: auto;
+}
+
+/* =========================
+   Section padding (prevents cramped/overflow)
+========================= */
+section {
+  padding: 24px 0;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 16px 0;
+  }
 }
